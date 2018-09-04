@@ -4,7 +4,8 @@ import org.openqa.selenium.By;
 import por.core.Driver;
 
 public class CheckInSummary {
-    public static By cargoArrivalDetailsLbl = By.xpath("//android.view.View[@content-desc='Cargo Arrival Details']");
+    //public static By cargoArrivalDetailsLbl = By.xpath("//android.view.View[@content-desc='Cargo Arrival Details']");
+    public static By cargoArrivalDetailsLbl = By.xpath("//ion-item[contains(.,'Cargo Arrival Details')]");
 
     public static class CargoArrivalDetails {
         public static void open(Driver driver) {

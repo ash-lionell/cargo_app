@@ -1,11 +1,14 @@
+package por.layout;
+
 import org.openqa.selenium.By;
 import por.core.Driver;
 
 public class Options {
-    public static By REF = By.xpath("");
+    public static By REF = By.xpath("//ion-popover");
 
     public static By optionItm(String optionName) {
-        return By.xpath("//android.view.View[contains(@content-desc,'"+optionName+"')]");
+        //return By.xpath("//android.view.View[contains(@content-desc,'"+optionName+"')]");
+        return By.xpath(".//ion-item[starts-with(normalize-space(),'"+optionName+"')]");
     }
 
     public static final class OPTIONS {
@@ -15,7 +18,7 @@ public class Options {
     }
 
     public static void select(Driver driver, String optionName) {
-        driver.get(optionItm(optionName)).click();
+        driver.get(optionItm(optionName),REF).click();
         driver.sleep(Driver.INTERACTION_TIMEOUT);
     }
 }
