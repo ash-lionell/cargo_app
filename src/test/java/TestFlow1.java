@@ -38,6 +38,8 @@ public class TestFlow1 {
     @BeforeSuite
     public void initializeSuite() throws IOException {
         try {
+            System.out.println("started");
+            System.out.println("started 2");
             DesiredCapabilities caps=DesiredCapabilities.android();
             caps.setCapability("platformName","Android");
             caps.setCapability("appPackage","com.champ.cargosystemsapp");

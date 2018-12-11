@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.functions.ExpectedCondition;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -42,7 +43,8 @@ public class Driver {
     public static int INTERACTION_TIMEOUT = 500;
 
     public Driver(DesiredCapabilities capabilities) throws MalformedURLException {
-        capabilities.setCapability("deviceName","mydevice");
+        capabilities.setCapability("deviceName","Pixel_API_25");
+        capabilities.setCapability("udid","emulator-5554");
         //capabilities.setCapability("automationName","UIAutomator2");
         capabilities.setCapability("autoGrantPermissions","true");
         //capabilities.setCapability("chromedriverExecutable","C:\\Users\\34150\\Downloads\\chromedriver_win32\\chromedriver.exe");
@@ -53,11 +55,11 @@ public class Driver {
         setChromeCapability(webviewVersion);
         capabilities.setCapability("newCommandTimeout",900000);
 
-        driver=new AndroidDriver(new URL("http://localhost:4723/wd/hub"),this.capabilities);
+        //driver=new AndroidDriver(new URL("http://localhost:4723/wd/hub"),this.capabilities);
+        driver=new AndroidDriver(new URL("http://localhost:3000/wd/hub"),this.capabilities);
         wait = new WebDriverWait(driver,TIMEOUT);
 
-        //PowerShell p=new PowerShell("adb shell dumpsys package com.google.android.webview");
-        //System.out.println(p);
+        //driver.switchTo().
 
         context=new String[2];
         Set<String> ctxts=((AndroidDriver) driver).getContextHandles();
@@ -115,7 +117,7 @@ public class Driver {
         System.out.println("came here 1");
         try {
             Process p=Runtime.getRuntime()
-                    .exec("C:\\Users\\34150\\Downloads\\platform-tools_r28.0.0-windows\\platform-tools\\adb.exe shell " +
+                    .exec("C:\\Users\\34150\\Downloads\\platform-tools_r28.0.0-windows\\platform-tools\\adb.exe -s emulator-5554 shell " +
                             "dumpsys package com.google.android.webview");
             p.waitFor();
             System.out.println("came here 2");
@@ -123,7 +125,7 @@ public class Driver {
             String versionText=null;
             while(r.ready()) {
                 versionText=r.readLine().trim();
-                //System.out.println(versionText);
+                System.out.println(versionText);
                 if (versionText.toLowerCase().startsWith("versionname"))
                     break;
             }
@@ -198,6 +200,9 @@ public class Driver {
             } catch (Exception e) {}
         WebElement contextEl=driver.findElement(context);
         //wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+
+        Assert.assertTrue("Assertion condition failed.",true);
+
         sleep(INTERACTION_TIMEOUT);
         return contextEl.findElement(locator);
     }
